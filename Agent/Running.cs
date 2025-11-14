@@ -2,6 +2,12 @@
 {
     public static class Running
     {
+        
+        /// <summary>
+        /// 梦开始的地方
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public static async Task RunningAsync()
         {
 
@@ -9,9 +15,9 @@
             //Initialize Deepseek Client
             var endpoint = new Uri(Environment.GetEnvironmentVariable("DEEPSEEK_ENDPOINT") ?? throw new InvalidOperationException("DEEPSEEK_ENDPOINT_ENDPOINT is not set."));
 
-            string? chatModel = Environment.GetEnvironmentVariable("DEEPSEEK_CHATMODEL") ?? "deepseek-chat";
+            string? chatModel = Environment.GetEnvironmentVariable("DEEPSEEK_CHAT_MODEL") ?? "deepseek-chat";
 
-            string? apiKey = Environment.GetEnvironmentVariable("DEEPSEEK_APIKEY") ?? throw new InvalidOperationException("DEEPSEEK_API_KEY is not set.");
+            string? apiKey = Environment.GetEnvironmentVariable("DEEPSEEK_API_KEY") ?? throw new InvalidOperationException("DEEPSEEK_API_KEY is not set.");
 
 
             //Process Channel
