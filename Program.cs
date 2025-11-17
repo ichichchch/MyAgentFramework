@@ -10,3 +10,6 @@ Console.OutputEncoding = Encoding.UTF8;
 
 //函数调用
 //await UsingFunctionTools.FunctionCalling();
+
+//函数调用 + 用户审批
+await UsingFunctionToolsWithApprovals.FunctionCallingWithApprovals();
