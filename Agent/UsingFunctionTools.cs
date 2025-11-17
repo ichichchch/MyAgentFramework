@@ -54,7 +54,7 @@
             string? weatherUrl = $"http://api.weatherapi.com/v1/current.json?key=c0013f0c23944d5384913054251410&q={location}&aqi=no";
 
 
-            Console.WriteLine(weatherUrl);
+            Console.WriteLine("已调用函数工具");
 
 
             return await httpClient.GetStringAsync(weatherUrl);
