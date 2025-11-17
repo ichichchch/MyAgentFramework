@@ -12,4 +12,10 @@ Console.OutputEncoding = Encoding.UTF8;
 //await UsingFunctionTools.FunctionCalling();
 
 //函数调用 + 用户审批
-await UsingFunctionToolsWithApprovals.FunctionCallingWithApprovals();
+//await UsingFunctionToolsWithApprovals.FunctionCallingWithApprovals();
+
+//结构化输出
+//await StructuredOutput.StructureFunction();
+
+//支持将对话线程（conversation thread）持久化到磁盘，以便后续恢复使用
+await PersistedConversations.PersistedConversationsFunction();

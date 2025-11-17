@@ -1,5 +1,9 @@
 ﻿namespace MyAgentFramework.Agent
 {
+
+    /// <summary>
+    /// 使用函数工具
+    /// </summary>
     public static class UsingFunctionTools
     {
         public static async Task FunctionCalling()
