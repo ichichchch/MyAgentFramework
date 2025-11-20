@@ -18,4 +18,7 @@ Console.OutputEncoding = Encoding.UTF8;
 //await StructuredOutput.StructureFunction();
 
 //支持将对话线程（conversation thread）持久化到磁盘，以便后续恢复使用
-await PersistedConversations.PersistedConversationsFunction();
+//await PersistedConversations.PersistedConversationsFunction();
+
+
+//

@@ -42,10 +42,12 @@
             // JsonElement 是 .NET 中表示不可变 JSON 数据的类型，便于后续存储或传输。
             JsonElement serializedThread = thread.Serialize();
 
-            // === 安全生成临时文件路径 ===
-            string tempDirectory = Path.GetTempPath();          // 系统临时目录，如 C:\Users\...\AppData\Local\Temp\
-            string randomFileName = Path.GetRandomFileName();  // 如 "a1b2c3d4.tmp"
+
+            // 安全生成临时文件路径
+            string tempDirectory = Path.GetTempPath();   
+            string randomFileName = Path.GetRandomFileName();  
             string filePath = Path.Combine(tempDirectory, randomFileName);
+
 
             // 将序列化后的线程数据（JSON 格式）异步写入临时文件；
             // 使用 JsonSerializer.Serialize 将 JsonElement 转为 JSON 字符串并保存。
@@ -57,7 +59,6 @@
 
 
             // 使用代理的 DeserializeThread 方法，将加载的 JSON 数据反序列化为一个新的 AgentThread 对象；
-            // 此线程完整恢复了之前的对话历史（包括系统提示、用户消息和 AI 回复）。
             var resumedThread = agent.DeserializeThread(reloadedSerializedThread);
 
 
