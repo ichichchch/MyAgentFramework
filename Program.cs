@@ -21,4 +21,5 @@ Console.OutputEncoding = Encoding.UTF8;
 //await PersistedConversations.PersistedConversationsFunction();
 
 
-//
+//第三方线程存储
+//await _3rdPartyThreadStorage.StorageFunction();

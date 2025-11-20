@@ -23,3 +23,12 @@ global using MyAgentFramework.Model;
 global using MyAgentFramework.Command;
 
 global using Microsoft.SemanticKernel.Connectors.InMemory;
+
+global using OpenTelemetry;
+
+global using OpenTelemetry.Trace;
+
+global using Microsoft.Extensions.DependencyInjection;
+
+global using Microsoft.Extensions.Hosting;
+

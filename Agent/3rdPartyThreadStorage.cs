@@ -4,7 +4,7 @@
     /// <summary>
     /// 用于存储 AI 对话线程的第三方（外部）存储服务的私有引用或实现
     /// </summary>
-    public class _3rdPartyThreadStorage
+    public static class ThreePartyThreadStorage
     {
         public  static async Task StorageFunction()
         {
