@@ -31,3 +31,7 @@ Console.OutputEncoding = Encoding.UTF8;
 
 //MCP Tool
 //await AsMcpTool.MCPFunction();
+
+
+//使用图片
+//await UsingImage.ImageFunction();
