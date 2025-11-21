@@ -23,3 +23,11 @@ Console.OutputEncoding = Encoding.UTF8;
 
 //第三方线程存储
 //await _3rdPartyThreadStorage.StorageFunction();
+
+
+//依赖注入
+//await DependencyInjection.DIFunction();
+
+
+//MCP Tool
+//await AsMcpTool.MCPFunction();
