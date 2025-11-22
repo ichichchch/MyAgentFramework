@@ -1,5 +1,8 @@
 ﻿namespace MyAgentFramework.Agent
 {
+    /// <summary>
+    /// 作为MCP工具
+    /// </summary>
     public static class AsMcpTool
     {
         public static async Task MCPFunction()
