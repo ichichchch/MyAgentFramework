@@ -1,7 +1,16 @@
 ﻿namespace MyAgentFramework.Agent
 {
+
+    /// <summary>
+    /// 处理长时间运行操作的后台响应（background responses）
+    /// 通过延续令牌（continuation tokens）轮询操作状态
+    /// 在轮询周期间持久化/恢复代理状态
+    /// </summary>
     public static class BackgroundResponsesWithToolsAndPersistence
     {
+
+        //模拟持久化存储
+        private static readonly Dictionary<string, JsonElement?> stateStore = [];
 
         public static async Task Function()
         {
@@ -31,17 +40,80 @@
 
             //Agent
             var agent = new OpenAIClient(apiKeyCredential, openAIClientOptions).GetChatClient(chatModel).CreateAIAgent(agentOptions);
+
+
+            //AgentRunOptions 启用后台响应模式(仅Azure OpenAI支持)
+            AgentRunOptions options = new() { AllowBackgroundResponses = true };
+
+
+            //对话线程
+            var thread = agent.GetNewThread();
+
+
+            var response = await agent.RunAsync("写一部长篇小说，讲述一支宇航员小队探索一片未知星系的故事。", thread, options);
+
+
+            //轮询逻辑
+            while (response.ContinuationToken is not null)
+            {
+
+                PersistAgentState(thread, response.ContinuationToken);
+
+                await Task.Delay(TimeSpan.FromSeconds(10));
+
+                RestoreAgentState(agent, out thread, out object? continuationToken);
+
+                options.ContinuationToken = continuationToken;
+
+                response = await agent.RunAsync(thread, options);
+            }
+
+            Console.WriteLine(response.Text);
+
+        }
+
+
+        /// <summary>
+        /// 状态持久化方法
+        /// </summary>
+        /// <param name="thread"></param>
+        /// <param name="continuationToken"></param>
+        static void PersistAgentState(AgentThread thread, object? continuationToken)
+        {
+            stateStore["thread"] = thread.Serialize();
+            stateStore["continuationToken"] = JsonSerializer.SerializeToElement(continuationToken, AgentAbstractionsJsonUtilities.DefaultOptions.GetTypeInfo(typeof(ResponseContinuationToken)));
+        }
+
+        /// <summary>
+        /// 恢复状态方法
+        /// </summary>
+        /// <param name="agent"></param>
+        /// <param name="thread"></param>
+        /// <param name="continuationToken"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        static void RestoreAgentState(AIAgent agent, out AgentThread thread, out object? continuationToken)
+        {
+            JsonElement serializedThread = stateStore["thread"] ?? throw new InvalidOperationException("No serialized thread found in state store.");
+            JsonElement? serializedToken = stateStore["continuationToken"];
+
+            thread = agent.DeserializeThread(serializedThread);
+            continuationToken = serializedToken?.Deserialize(AgentAbstractionsJsonUtilities.DefaultOptions.GetTypeInfo(typeof(ResponseContinuationToken)));
         }
 
 
 
+        /// <summary>
+        /// 为小说生成科学事实依据
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <returns></returns>
         [Description("Researches relevant space facts and scientific information for writing a science fiction novel")]
         static async Task<string> ResearchSpaceFactsAsync(string topic)
         {
 
             Console.WriteLine($"[ResearchSpaceFacts] Researching topic: {topic}");
 
-            // Simulate a research operation
+            // 模拟10秒耗时操作
             await Task.Delay(TimeSpan.FromSeconds(10));
 
 
@@ -61,6 +133,10 @@
         }
 
 
+        /// <summary>
+        /// 角色生成函数
+        /// </summary>
+        /// <returns></returns>
         [Description("Generates character profiles for the main astronaut characters in the novel")]
         static async Task<IEnumerable<string>> GenerateCharacterProfilesAsync()
         {
