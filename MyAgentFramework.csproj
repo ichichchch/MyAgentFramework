@@ -21,4 +21,10 @@
     <PackageReference Include="OpenTelemetry" Version="1.14.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RAG\TextSearchStore\" />
+    <Folder Include="Workflows\" />
+    <Folder Include="M365Agent\" />
+  </ItemGroup>
+
 </Project>
