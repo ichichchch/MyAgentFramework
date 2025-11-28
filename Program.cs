@@ -35,3 +35,7 @@ Console.OutputEncoding = Encoding.UTF8;
 
 //使用图片
 //await UsingImage.ImageFunction();
+
+//处理长时间运行操作的后台响应（background responses）
+//await BackgroundResponsesWithToolsAndPersistence.Function();
+
